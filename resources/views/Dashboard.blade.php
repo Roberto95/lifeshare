@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+@include('includes.message-block')
 	<section class="row new-post">
 		<!--col son las columnas, y para hacerla hacia la parte central, se utiliza el offset 3-->
 		<div class="col-md-6 offset-md-3">
