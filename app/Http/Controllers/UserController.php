@@ -9,10 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
-	public function getDashboard(){
-		return view('Dashboard');
-
-	}
+	
 
 	public function postSignUp(Request $request)
 	{

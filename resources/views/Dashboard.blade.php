@@ -24,31 +24,21 @@
 			<header>
 				<h3>Lo que los demás dicen...</h3>
 			</header>
-			<article class="post">
-				<p>el texto que aqui deberia ir</p>
+			@foreach($posts as $post)
+					<article class="post">
+				<p>{{$post->body}}</p>
 				<div class="info">
-					Posted by beto on 12 nov 2016
+					<!--ya esta definida la relacion, por eso se pone post->user, ademas se modifico el output de la fecha-->
+					Publicado por {{$post->user->first_name}} el {{date_format($post->created_at,'d/m/y')}}
 				</div>
 				<div class="interaction">
-					<a href="#">Like</a> |
-					<a href="#">Dislike</a>	|
-					<a href="#">Edit</a> | 	
-					<a href="#">Delete</a>
+					<a href="#">Me gusta</a> |
+					<a href="#">No me gusta</a>	|
+					<a href="#">Editar</a> | 	
+					<a href="#">Borrar</a>
 				</div>
 			</article>
-
-			<article class="post">
-				<p>el texto que aqui deberia ir</p>
-				<div class="info">
-					Posted by beto on 12 nov 2016
-				</div>
-				<div class="interaction">
-					<a href="#">Like</a> |
-					<a href="#">Dislike</a>	|
-					<a href="#">Edit</a> | 	
-					<a href="#">Delete</a>
-				</div>
-			</article>
+				@endforeach
 		</div>
 	</section>
 @endsection
