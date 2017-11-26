@@ -1,7 +1,15 @@
-@extends('layouts.master')
+<?php
+	use App\Http\Controllers\PostController;
+?>
+@extends('layouts.masterlog')
+
+@section('title')
+    LifeShare
+@endsection
 
 @section('content')
 @include('includes.message-block')
+
 	<section class="row new-post">
 		<!--col son las columnas, y para hacerla hacia la parte central, se utiliza el offset 3-->
 		<div class="col-md-6 offset-md-3">
@@ -28,13 +36,16 @@
 			@foreach($posts as $post)
 					<article class="post" data-postid="{{$post->id}}">
 				<p>{{$post->body}}</p>
+			
+				
+				
 				<div class="info">
 					<!--ya esta definida la relacion, por eso se pone post->user, ademas se modifico el output de la fecha-->
-					Publicado por {{$post->user->first_name}} el {{date_format($post->created_at,'d/m/y')}}
+					Publicado por {{$post->user->first_name}} el {{date_format($post->created_at,'d/m/y')}}  
 				</div>
 				<div class="interaction">
-					<a href="#">Me gusta</a> |
-					<a href="#">No me gusta</a>	
+					<a href="#" class="like">{{Auth::user()->likes()->where('post_id',$post->id)->first() ? Auth::user()->likes()->where('post_id',$post->id)->first()->like == 1 ? 'Te gusta este post' : 'Me gusta' : 'Me gusta'}}</a> ({{PostController::getCountLikes($post->id)}})	|
+					<a href="#" class="like">{{Auth::user()->likes()->where('post_id',$post->id)->first() ? Auth::user()->likes()->where('post_id',$post->id)->first()->like == 0 ? 'No te gusta este post' : 'No me gusta' : 'No me gusta'}}</a> ({{PostController::getCountDislikes($post->id)}})	
 					@if(Auth::user() == $post->user)
 						|
 						<a href="#" class="edit">Editar</a> | 	
@@ -47,7 +58,10 @@
 		</div>
 	</section>
 
-	<div class="modal" tabindex="-1" role="dialog" id="edit-modal">
+	  <script src="assets/js/bootstrap-transition.js"></script>
+    <script src="assets/js/bootstrap-modal.js"></script>
+
+<div class="modal" tabindex="-1" role="dialog" id="edit-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -64,8 +78,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="modal-save">Guardar cambios</button>
+                    <button type="button" class="button" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="button" id="modal-save">Guardar cambios</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -73,7 +87,8 @@
 
     <script>
     	var token='{{Session::token() }}';
-    	var url='{{route('edit')}}';
+    	var urlEdit='{{route('edit')}}';
+    	var urlLike='{{route('like')}}';
     </script>
 
 @endsection

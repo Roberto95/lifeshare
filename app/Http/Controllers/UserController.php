@@ -3,8 +3,11 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 //autentificar
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -53,8 +56,12 @@ class UserController extends Controller
 		if(Auth::attempt(['email'=>$request['signin_mail'], 'password'=>$request['signin_password']]))
 		{
 			return redirect()->route('Dashboard');
+		}else{
+			//guardar un mensaje de error por si no se encuentra el usuario o la contraseña
+			$message='Usuario y/o contraseña inválidos';
 		}	
-		return redirect()->back();
+		//redireccionar atras con el mensaje de error
+		return redirect()->back()->with(['message'=>$message]);
 	}
 
 	public function getLogout()
@@ -65,5 +72,28 @@ class UserController extends Controller
 
 	public function getAccount(){
 		return view('account', ['user'=>Auth::user()]);
+	}
+
+	public function postSaveAccount(Request $request){
+		$this->validate($request,[
+			'first_name'=>'required|max:120'
+		]);
+
+		$user= Auth::user();
+		$user->first_name=$request['first_name'];
+		$user->update();
+		$file=$request->file('image');
+		$filename=$request['first_name'] . '-' . $user->id . '.jpg';
+		if($file){
+			//nos permite almacenar archivos de cualquier tipo se modifica en filesystems.php en la carpeta config
+			Storage::disk('local')->put($filename, File::get($file));
+		}
+
+		return redirect()->route('account');
+	}
+
+	public function getUserImage($filename){
+		$file=Storage::disk('local')->get($filename);
+		return new Response($file, 200);
 	}
 }

@@ -7,6 +7,11 @@
 @section('content')
     @include('includes.message-block')
 
+    <br>
+    <br>
+    <br>
+
+    
    <div class="row">
         <div class="col-md-4 offset-md-1">
         <h3>Registrarse:</h3>
@@ -14,7 +19,7 @@
             <form action="{{ route('signup') }}" method="post">
                 <div class="form-group">
                     <label for="email">Tu E-mail</label>
-                    <!--{{ $errors->has('email') ? 'is-invalid' : '' }} esto es para marcar en rojo los errores en los campos-->
+                    <!--esto es para marcar en rojo los errores en los campos-->
                     <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="text" name="email" id="email" placeholder="example@example.com" value="{{Request::old('email')}}">
                  </div>
                  <div class="form-group">
@@ -25,14 +30,18 @@
                     <label for="password">Tu contraseña</label>
                     <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password" placeholder="Escribe tu contraseña...">
                  </div>
-                 <button type="submit" class="btn btn-primary">Crear cuenta</button>
+                 <button type="submit" class="button">Crear cuenta</button>
                  <input type="hidden" name="_token" value="{{ Session::token() }}">
             </form>
+
         </div>
+       
 
         <div class="col-md-4 offset-md-2">
+            
             <h3>Iniciar sesión:</h3>
             <!--Mover la ruta hacia el signin de las rutas, la cual a su vez se redirige a las funciones en el controlador-->
+            
             <form action="{{route('signin')}}" method="post">
                 <div class="form-group">
                     <label for="email">Tu E-mail</label>
@@ -43,11 +52,19 @@
                     <label for="password">Tu contraseña</label>
                     <input class="form-control {{ $errors->has('signin_password') ? 'is-invalid' : '' }}" type="password" name="signin_password" id="signin_password" placeholder="Escribe tu contraseña...">
                  </div>
-                 <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                 <button type="submit" class="button">Iniciar sesión</button>
                     <input type="hidden" name="_token" value="{{ Session::token() }}">
             </form>
         </div>
    </div>
-
+   <br>
+   <br>
+   <br>
+   <div class="linea"></div>
+   <div class="row">
+        <div class="col-md-4 offset-md-1">    
+        <span>LifeShare © 2017</span>    
+        </div>
+    </div>
 
 @endsection

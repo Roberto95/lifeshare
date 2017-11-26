@@ -6,11 +6,13 @@
 .new-post header,
 .posts header{
 	margin-bottom: 20px;
+
 }
 
 .posts .post{
 	padding-left: 10px;
 	border-left: 3px solid #a21b24;
+
 	margin-bottom: 30px;
 }
 
@@ -40,4 +42,36 @@
 .error,
 .success{
 	text-align: center;
+}
+
+  .button{
+        background-color: #e00707;
+        border: 2px solid #000000;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+
+    .imagensinperfil{
+    	border: 2px solid #000000;
+    	border-radius: 8px;
+    }
+
+    .image{
+    	border-radius: 8px;
+    }
+
+.linea{
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 20px;
+}
+
+.lineavertical{
+	border-left: 1px solid #ccc;
 }

@@ -12,4 +12,9 @@ class Post extends Model
     	//un post solo puede pertenecer a un usuario
     	return $this->belongsTo('App\User');
     }
+
+    //un post puede tener varios likes
+    public function likes(){
+    	return $this->hasMany('App\Like');
+    }
 }
